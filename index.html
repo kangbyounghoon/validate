@@ -12,38 +12,93 @@
   <meta property="og:url" content="">
   <meta property="og:image" content="">
 
-  <link rel="manifest" href="site.webmanifest">
+  <!--  <link rel="manifest" href="site.webmanifest">-->
   <link rel="apple-touch-icon" href="icon.png">
   <!-- Place favicon.ico in the root directory -->
 
-  <link rel="stylesheet" href="css/normalize.css">
-  <link rel="stylesheet" href="css/main.css">
+  <!--  <link rel="stylesheet" href="css/normalize.css">-->
+  <!--  <link rel="stylesheet" href="css/main.css">-->
 
-  <meta name="theme-color" content="#fafafa">
+  <!--  <meta name="theme-color" content="#fafafa">-->
 </head>
 
 <body>
 <p>atomy validate sample.</p>
-<input type="text" id="id1" value="">
-<input type="text" id="id2" value="12">
-<input type="text" id="email1" value="fapchino@ibrogroup.co.kr">
+<form>
+  <div>
+    <input type="text" id="id1" value="12">
+    <input type="text" id="id2" value="34">
+    <input type="text" id="email1" value="fapchino@ibrogroup.co.kr">
+  </div>
+  <div>
+    <select id="select1">
+      <option value="1">양력</option>
+      <option value="0">음력</option>
+    </select>
+  </div>
+  <div>
+    <input type="radio" name="fruit" value="apple"/>사과
+    <input type="radio" name="fruit" value="lemon"/>레몬
+    <input type="radio" name="fruit" value="mango"/>망고
+    <input type="radio" name="fruit" value="melon"/>메론
+  </div>
+  <div>
+    <input type="checkbox" name="laptop"
+           value="HP">HP laptop<br>
+    <input type="checkbox" name="laptop"
+           value="DELL">DELL laptop<br>
+    <input type="checkbox" name="laptop"
+           value="MAC">MAC laptop<br>
+    <input type="checkbox" name="laptop"
+           value="ASUS">ASUS laptop<br>
+  </div>
+</form>
 <input type="button" value="validate run" onclick="btnClick(this)">
 <!-- Add your site or application content here -->
 <!--  <script src="js/vendor/modernizr-3.11.2.min.js"></script>-->
 <!--  <script src="js/plugins.js"></script>-->
 <!--  <script src="js/main.js"></script>-->
-<script
-  src="https://code.jquery.com/jquery-1.12.4.js"
-  integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU="
-  crossorigin="anonymous"></script>
+<!--<script-->
+<!--  src="https://code.jquery.com/jquery-1.12.4.js"-->
+<!--  integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU="-->
+<!--  crossorigin="anonymous"></script>-->
+<script src="js/jquery-1.11.3.js"></script>
 <script src="https://underscorejs.org/underscore-umd.js"></script>
 <script src="js/validate.js"></script>
 <script>
   var clientData = [
     {
+      id: 'pass1', type: 'text',
+      // value: ,
+      rules: [
+        {type: 'required', message: `{id} 필드는 필수입력입니다.`},
+      ]
+    },
+    {
+      id: 'select1', type: 'select',
+      // value: "2",
+      rules: [
+        {type: 'required', message: `{id} 필드는 필수입력입니다.`},
+      ]
+    },
+    {
+      id: 'fruit', type: 'radio',
+      // value: 'apple'
+      rules: [
+        {type: 'required', message: `{id} 필드는 필수입력입니다.`},
+      ]
+    },
+    {
+      id: 'laptop', type: 'checkbox',
+      // value: [HP, MAC]
+      rules: [
+        {type: 'required', message: `{id} 필드는 필수입력입니다.`},
+      ]
+    },
+    {
       id: 'id1',
       type: 'input',
-      value: '123',
+      value: '12',
       rules: [
         {type: 'required', message: `{id} 필드는 필수입력입니다.`, isFocus: true},
         {type: 'maxlength', length: 50, message: `{id} 필드 길이는 {length} 이하 입력하십시오.`},

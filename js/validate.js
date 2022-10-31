@@ -283,11 +283,30 @@
        */
       const Config = (function () {
 
+        function checkable(element) {
+          return (/radio|checkbox/i).test(element.type);
+        }
+
         function getData(obj) {
           const doc = global.document;
-          // console.log('existy(doc): ', existy(doc));
-          // console.log(existy(doc) ? doc.getElementById(obj.id) : '')
-          return  existy(doc) ? doc.getElementById(obj.id).value : _.has(obj, 'value') ? obj['value'] : '';
+          if (!existy(doc)) return _.has(obj, 'value') ? obj['value'] : '';
+          const element = doc.getElementById(obj.id) || doc.getElementsByName(obj.id);
+
+          if (element.nodeName && element.nodeName.toLowerCase() === "select") {
+            const val = element.value;
+            return val && val.length > 0;
+          }
+
+          if (Object.prototype.toString.call(element) === '[object NodeList]') {
+            let result = doc.querySelectorAll("input[name='" + obj.id + "']:checked");
+            if (result.length === 0) return [];
+
+            return _.reduce(result, function (values, e) {
+              return checkable(e) ? _.chain(values).push(e.value).value() : values;
+            }, []);
+          }
+
+          return element.value;
         }
 
         const requiredKeys = ['id', 'type', 'rules'];
@@ -629,7 +648,7 @@
           //   return dispatch.apply(null, retIsa);
           // }
 
-        // clientData rules 정보를 통해 실제 유효성검증함수를 만들어 조립하여 저장한다. dispatch closure함수반환.
+          // clientData rules 정보를 통해 실제 유효성검증함수를 만들어 조립하여 저장한다. dispatch closure함수반환.
         const validateBizRepo = createValidateBizRepo(clientData);
         // console.log(
         //   validateBizRepo.toString()
