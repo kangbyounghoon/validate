@@ -26,6 +26,8 @@
 <p>atomy validate sample.</p>
 <form>
   <div>
+    <input type="text" id="pass1" value="qwer1234!!">
+    <input type="text" id="pass2" value="">
     <input type="text" id="id1" value="12">
     <input type="text" id="id2" value="34">
     <input type="text" id="email1" value="fapchino@ibrogroup.co.kr">
@@ -66,77 +68,100 @@
 <script src="https://underscorejs.org/underscore-umd.js"></script>
 <script src="js/validate.js"></script>
 <script>
+
   var clientData = [
     {
       id: 'pass1', type: 'text',
       // value: ,
       rules: [
         {type: 'required', message: `{id} 필드는 필수입력입니다.`},
-      ]
-    },
-    {
-      id: 'select1', type: 'select',
-      // value: "2",
-      rules: [
-        {type: 'required', message: `{id} 필드는 필수입력입니다.`},
-      ]
-    },
-    {
-      id: 'fruit', type: 'radio',
-      // value: 'apple'
-      rules: [
-        {type: 'required', message: `{id} 필드는 필수입력입니다.`},
-      ]
-    },
-    {
-      id: 'laptop', type: 'checkbox',
-      // value: [HP, MAC]
-      rules: [
-        {type: 'required', message: `{id} 필드는 필수입력입니다.`},
-      ]
-    },
-    {
-      id: 'id1',
-      type: 'input',
-      value: '12',
-      rules: [
-        {type: 'required', message: `{id} 필드는 필수입력입니다.`, isFocus: true},
-        {type: 'maxlength', length: 50, message: `{id} 필드 길이는 {length} 이하 입력하십시오.`},
-        {type: 'minlength', length: 1, message: `{id} 필드 길이는 {length} 이상 입력하십시오.`},
-        {type: 'max', value: 100, message: `{id} 필드는 {value} 값 보다 작아야 합니다.`},
-        {type: 'min', value: 1, message: `{id} 필드는 {value} 값 보다 커야 합니다.`},
-      ]
-    },
-    {
-      id: 'id2',
-      type: 'input',
-      value: '12',
-      rules: [
-        {type: 'required', message: `{id} 필드는 필수입력입니다.`},
-        {type: 'maxlength', length: 50, message: `{id} 필드 길이는 {length} 이하 입력하십시오.`},
-        {type: 'minlength', length: 1, message: `{id} 필드 길이는 {length} 이상 입력하십시오.`},
-      ]
-    },
-    {
-      id: 'email1', type: 'input',
-      value: 'fapchino@ibrogroup.co.kr',
-      rules: [
-        {type: 'required', message: `{id} 필드는 필수입력입니다.`},
-        {type: 'maxlength', length: 50, message: `{id} 필드 길이는 {length} 이하 입력하십시오.`},
-        {type: 'minlength', length: 1, message: `{id} 필드 길이는 {length} 이상 입력하십시오.`},
         {
-          type: 'email',
-          message: `유효한 이메일 형식이 아닙니다.`
+          type: 'ntRegexp', message: `{id} 필드는 영문(대소문자포함),숫자,특수문자 외 값이 올수 없습니다.`,
+          expression: /[^A-Za-z0-9\!\@@\#\$\%\^\&\*\(\)\-\=\_\+]/gi,
         },
+        {type: 'maxlength', length: 12, message: `{id} 필드 길이는 {length} 이하 입력하십시오.`},
+        {type: 'minlength', length: 8, message: `{id} 필드 길이는 {length} 이상 입력하십시오.`},
       ]
     },
+    {
+      id: 'pass2', type: 'text',
+      // value: ,
+      rules: [
+        {type: 'required', message: `{id} 필드는 필수입력입니다.`},
+        {
+          type: 'ntRegexp', message: `{id} 필드는 영문(대소문자포함),숫자,특수문자 외 값이 올수 없습니다.`,
+          expression: /[^A-Za-z0-9\!\@\#\$\%\^\&\*\(\)\-\=\_\+]/gi,
+        },
+        {type: 'maxlength', length: 12, message: `{id} 필드 길이는 {length} 이하 입력하십시오.`},
+        {type: 'minlength', length: 8, message: `{id} 필드 길이는 {length} 이상 입력하십시오.`},
+        {type: 'equalsTo', targetId: 'pass1', message: `{id} 필드 값과 {targetId} 값이 일치하지 않습니다.`}
+      ]
+    },
+    // {
+    //   id: 'select1', type: 'select',
+    //   // value: "2",
+    //   rules: [
+    //     {type: 'required', message: `{id} 필드는 필수입력입니다.`},
+    //   ]
+    // },
+    // {
+    //   id: 'fruit', type: 'radio',
+    //   // value: 'apple'
+    //   rules: [
+    //     {type: 'required', message: `{id} 필드는 필수입력입니다.`},
+    //   ]
+    // },
+    // {
+    //   id: 'laptop', type: 'checkbox',
+    //   // value: [HP, MAC]
+    //   rules: [
+    //     {type: 'required', message: `{id} 필드는 필수입력입니다.`},
+    //   ]
+    // },
+    // {
+    //   id: 'id1',
+    //   type: 'input',
+    //   value: '12',
+    //   rules: [
+    //     {type: 'required', message: `{id} 필드는 필수입력입니다.`, isFocus: true},
+    //     {type: 'maxlength', length: 50, message: `{id} 필드 길이는 {length} 이하 입력하십시오.`},
+    //     {type: 'minlength', length: 1, message: `{id} 필드 길이는 {length} 이상 입력하십시오.`},
+    //     {type: 'max', value: 100, message: `{id} 필드는 {value} 값 보다 작아야 합니다.`},
+    //     {type: 'min', value: 1, message: `{id} 필드는 {value} 값 보다 커야 합니다.`},
+    //   ]
+    // },
+    // {
+    //   id: 'id2',
+    //   type: 'input',
+    //   value: '12',
+    //   rules: [
+    //     {type: 'required', message: `{id} 필드는 필수입력입니다.`},
+    //     {type: 'maxlength', length: 50, message: `{id} 필드 길이는 {length} 이하 입력하십시오.`},
+    //     {type: 'minlength', length: 1, message: `{id} 필드 길이는 {length} 이상 입력하십시오.`},
+    //   ]
+    // },
+    // {
+    //   id: 'email1', type: 'input',
+    //   value: 'fapchino@ibrogroup.co.kr',
+    //   rules: [
+    //     {type: 'required', message: `{id} 필드는 필수입력입니다.`},
+    //     {type: 'maxlength', length: 50, message: `{id} 필드 길이는 {length} 이하 입력하십시오.`},
+    //     {type: 'minlength', length: 1, message: `{id} 필드 길이는 {length} 이상 입력하십시오.`},
+    //     {
+    //       type: 'email',
+    //       message: `유효한 이메일 형식이 아닙니다.`
+    //     },
+    //   ]
+    // },
   ];
+  // clientData.debug = true;
+  clientData.callback = _.identity;
 
   function btnClick(event) {
     // console.log('event :', event);
-    console.log(
-      validate(clientData)
-    );
+    // console.log(
+    validate(clientData)
+    // );
   }
 </script>
 </body>

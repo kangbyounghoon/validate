@@ -9,9 +9,12 @@
 
   }(this,
     (function (global) {
-      if (!global._) {
+      if (!existy(global._)) {
         // https://underscorejs.org/
-        fail("언더스코어 라이브러리를 찾을 수 없습니다.");
+        return function () {
+          warn("언더스코어 라이브러리를 찾을 수 없습니다.");
+          return false;
+        };
       }
       const _ = global._;
       const VERSION = '1.0.0';
@@ -287,7 +290,7 @@
           return (/radio|checkbox/i).test(element.type);
         }
 
-        function getData(obj) {
+        function getValue(obj) {
           const doc = global.document;
           if (!existy(doc)) return _.has(obj, 'value') ? obj['value'] : '';
           const element = doc.getElementById(obj.id) || doc.getElementsByName(obj.id);
@@ -322,11 +325,11 @@
           getRequiredRuleKeys: function () {
             return requiredRuleKeys;
           },
-          rules: ['required', 'email', 'maxlength', 'minlength', 'max', 'min', 'digits', 'number'],
+          rules: ['required', 'email', 'maxlength', 'minlength', 'max', 'min', 'digits', 'number', 'regexp', 'ntRegexp', 'equalsTo'],
           methods: {
             // 두번째 인자 현재 규칙, 세번째 총 데이터
             required: function (obj/*, rule, origins*/) {
-              let value = getData(obj);
+              let value = getValue(obj);
               if (!_.isString(value) || !_.isArray(value)) {
                 value = value.toString();
               }
@@ -334,7 +337,7 @@
               return value.length > 0;
             },
             maxlength: function (obj/*, rule, origins*/) {
-              let value = getData(obj);
+              let value = getValue(obj);
               const maxlength = plucker('length')(_.rest(arguments)[0]);
               if (!_.isString(value) || !_.isArray(value)) {
                 value = value.toString();
@@ -343,7 +346,7 @@
               return value.length < maxlength;
             },
             minlength: function (obj/*, rule, origins*/) {
-              let value = getData(obj);
+              let value = getValue(obj);
               const minlength = plucker('length')(_.rest(arguments)[0]);
               if (!_.isString(value) || !_.isArray(value)) {
                 value = value.toString();
@@ -352,7 +355,7 @@
               return value.length > minlength;
             },
             email: function (obj/*, rule, origins*/) {
-              let value = getData(obj);
+              let value = getValue(obj);
               note(['method : email', ' obj.id :', obj.id, new RegExp(
                 /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/), '.test(value) :',
                 /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/.test(value)].join('')
@@ -360,29 +363,55 @@
               return /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/.test(value);
             },
             max: function (obj/*, rule, origins*/) {
-              let value = getData(obj);
+              let value = getValue(obj);
               const maxValue = plucker('value')(_.rest(arguments)[0]);
               note(['method : max ', ' obj.id :', obj.id, ' value :', value, ' value < maxValue :', value < maxValue].join(''));
               return value < maxValue;
             },
             min: function (obj/*, rule, origins*/) {
-              let value = getData(obj);
+              let value = getValue(obj);
               const minValue = plucker('value')(_.rest(arguments)[0]);
               note(['method : min ', ' obj.id :', obj.id, ' value :', value, ' value > minValue :', value > minValue].join(''));
               return value > minValue;
             },
             digits: function (obj/*, rule, origins*/) {
-              const value = getData(obj);
+              const value = getValue(obj);
               note(['method : digits ', ' obj.id :', obj.id, ' value :', value,
                 new RegExp(/^\d+$/), '.test(value) :', /^\d+$/.test(value)].join(''));
               return /^\d+$/.test(value)
             },
             number: function (obj/*, rule, origins*/) {
-              const value = getData(obj);
+              const value = getValue(obj);
               note(['method : digits ', ' obj.id :', obj.id, ' value :', value,
                 new RegExp(/^(?:-?\d+|-?\d{1,3}(?:,\d{3})+)?(?:\.\d+)?$/), '.test(value) :', /^(?:-?\d+|-?\d{1,3}(?:,\d{3})+)?(?:\.\d+)?$/.test(value)].join(''));
               return /^(?:-?\d+|-?\d{1,3}(?:,\d{3})+)?(?:\.\d+)?$/.test(value);
             },
+            regexp: function (obj/*, rule, origins*/) {
+              const expression = plucker('expression')(_.rest(arguments)[0]);
+              const value = getValue(obj);
+              note(['method : regexp ', ' obj.id :', obj.id, ' value :', value,
+                ' expression: ', new RegExp(expression), ' new RegExp(expression).test(value): ', (new RegExp(expression).test(value))].join(''));
+              return new RegExp(expression).test(value);
+            },
+            ntRegexp: function (obj/*, rule, origins*/) {
+              const expression = plucker('expression')(_.rest(arguments)[0]);
+              const value = getValue(obj);
+              note(['method : regexp ', ' obj.id :', obj.id, ' value :', value,
+                ' expression: ', new RegExp(expression), ' !new RegExp(expression).test(value): ', !(new RegExp(expression).test(value))].join(''));
+              return !(new RegExp(expression).test(value));
+            },
+            equalsTo: function (obj/*, rule, origins*/) {
+              const value = getValue(obj);
+              const targetId = plucker('targetId')(_.rest(arguments)[0]);
+              const target = _.find(_.rest(arguments)[1], function (target) {
+                return target.id === targetId;
+              });
+              if (!existy(targetId) || !existy(target)) return false;
+
+              const targetValue = getValue(target);
+              note(['method : equalsTo ', ' obj.id :', obj.id, ' value :', value].join(''), ' target: ', target, 'targetValue: ', targetValue, ' value === targetValue: ', value === targetValue);
+              return value === targetValue;
+            }
             /**
              * 비즈니스에 맞는 유효성 검사 필요시 해당 영역에 추가한다.
              */
@@ -587,6 +616,10 @@
       return function (clientData) {
         note(VERSION);
         note(['ibro-', (VERSION + Math.random()).replace(/\D/g, "")].join(''));
+
+        if (!truthy(clientData['debug'])) {
+          note = function () {};
+        }
 
         /**
          * 인자로 넘어온 데이터 배열 안 요소객체 단건 기준 선행처리 함수.
