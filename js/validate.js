@@ -618,7 +618,8 @@
         note(['ibro-', (VERSION + Math.random()).replace(/\D/g, "")].join(''));
 
         if (!truthy(clientData['debug'])) {
-          note = function () {};
+          note = function () {
+          };
         }
 
         /**
@@ -711,6 +712,18 @@
         //
         if (!existy(errors)) return true;
         console.log(errors);
+
+        const doc = global.document;
+        if (existy(doc)) {
+          setTimeout(function () {
+            let element = document.getElementById(errors['source']['id']) || document.getElementsByName(errors['source']['id']);
+            if (Object.prototype.toString.call(element) === '[object NodeList]') {
+              element = element[0];
+            }
+            element.focus();
+            alert(errors['errorMessage'][0]['message']);
+          }, 0);
+        }
 
         if (truthy(clientData['callback']) && _.isFunction(clientData['callback'])) {
           clientData.callback(errors);
