@@ -17,7 +17,7 @@
         };
       }
       const _ = global._;
-      const VERSION = '1.0.0';
+      const VERSION = '1.0.1';
 
       /**
        * 유틸 함수
@@ -720,8 +720,20 @@
             if (Object.prototype.toString.call(element) === '[object NodeList]') {
               element = element[0];
             }
-            element.focus();
-            alert(errors['errorMessage'][0]['message']);
+            const rules = getRules(errors);
+            const errorRule = errors['errorMessage'][0];
+
+            const configRule = _.find(rules, function (rule) {
+              return rule.type === errorRule.type;
+            })
+
+            if (configRule.isFocus) {
+              element.focus();
+            }
+
+            if (configRule.isAlert) {
+              alert(errorRule.message);
+            }
           }, 0);
         }
 

@@ -26,10 +26,12 @@
 <p>atomy validate sample.</p>
 <form>
   <div>
-    아이디1:<input type="text" id="id1" value="12"></br>
-    아이디2:<input type="text" id="id2" value="34"></br>
-    이메일1:<input type="text" id="email1" value="fapchino@ibrogroup.co.kr"> </br>
-    비밀번호1:<input type="text" id="pass1" value="qwer1234!!"> </br>
+    아이디1:<input type="text" id="id1" value=""></br>
+    아이디2:<input type="text" id="id2" value=""></br>
+    이메일1:<input type="text" id="email1" value=""> </br>
+    <!--    이메일1:<input type="text" id="email1" value="fapchino@ibrogroup.co.kr"> </br>-->
+    비밀번호1:<input type="text" id="pass1" value=""> </br>
+    <!--    비밀번호1:<input type="text" id="pass1" value="qwer1234!!"> </br>-->
     비밀번호2:<input type="text" id="pass2" value=""> </br>
   </div>
   =====================
@@ -80,35 +82,36 @@
     {
       id: 'id1',
       type: 'input',
-      value: '12',
+      // value: '12',
       rules: [
-        {type: 'required', message: `{id} 필드는 필수입력입니다.`, isFocus: true},
-        {type: 'maxlength', length: 50, message: `{id} 필드 길이는 {length} 이하 입력하십시오.`},
-        {type: 'minlength', length: 1, message: `{id} 필드 길이는 {length} 이상 입력하십시오.`},
-        {type: 'max', value: 100, message: `{id} 필드는 {value} 값 보다 작아야 합니다.`},
-        {type: 'min', value: 1, message: `{id} 필드는 {value} 값 보다 커야 합니다.`},
+        {type: 'required', message: `{id} 필드는 필수입력입니다.`, isFocus: true, isAlert: true},
+        {type: 'maxlength', length: 50, message: `{id} 필드 길이는 {length} 이하 입력하십시오.`, isFocus: true, isAlert: true},
+        {type: 'minlength', length: 1, message: `{id} 필드 길이는 {length} 이상 입력하십시오.`, isFocus: true, isAlert: true},
+        // {type: 'max', value: 100, message: `{id} 필드는 {value} 값 보다 작아야 합니다.`, isFocus: true, isAlert: true},
+        // {type: 'min', value: 1, message: `{id} 필드는 {value} 값 보다 커야 합니다.`, isFocus: true, isAlert: true},
       ]
     },
     {
       id: 'id2',
       type: 'input',
-      value: '12',
+      // value: '12',
       rules: [
-        {type: 'required', message: `{id} 필드는 필수입력입니다.`},
-        {type: 'maxlength', length: 50, message: `{id} 필드 길이는 {length} 이하 입력하십시오.`},
-        {type: 'minlength', length: 1, message: `{id} 필드 길이는 {length} 이상 입력하십시오.`},
+        {type: 'required', message: `{id} 필드는 필수입력입니다.`, isFocus: true, isAlert: true},
+        {type: 'maxlength', length: 50, message: `{id} 필드 길이는 {length} 이하 입력하십시오.`, isFocus: true, isAlert: true},
+        {type: 'minlength', length: 1, message: `{id} 필드 길이는 {length} 이상 입력하십시오.`, isFocus: true, isAlert: true},
       ]
     },
     {
       id: 'email1', type: 'input',
-      value: 'fapchino@ibrogroup.co.kr',
+      // value: 'fapchino@ibrogroup.co.kr',
       rules: [
-        {type: 'required', message: `{id} 필드는 필수입력입니다.`},
-        {type: 'maxlength', length: 50, message: `{id} 필드 길이는 {length} 이하 입력하십시오.`},
-        {type: 'minlength', length: 1, message: `{id} 필드 길이는 {length} 이상 입력하십시오.`},
+        {type: 'required', message: `{id} 필드는 필수입력입니다.`, isFocus: true, isAlert: true},
+        {type: 'maxlength', length: 50, message: `{id} 필드 길이는 {length} 이하 입력하십시오.`, isFocus: true, isAlert: true},
+        {type: 'minlength', length: 1, message: `{id} 필드 길이는 {length} 이상 입력하십시오.`, isFocus: true, isAlert: true},
         {
           type: 'email',
           message: `유효한 이메일 형식이 아닙니다.`
+          , isFocus: true, isAlert: true
         },
       ]
     },
@@ -116,54 +119,55 @@
       id: 'pass1', type: 'text',
       // value: ,
       rules: [
-        {type: 'required', message: `{id} 필드는 필수입력입니다.`},
+        {type: 'required', message: `{id} 필드는 필수입력입니다.`, isFocus: true, isAlert: true},
         {
           type: 'ntRegexp', message: `{id} 필드는 영문(대소문자포함),숫자,특수문자 외 값이 올수 없습니다.`,
-          expression: /[^A-Za-z0-9\!\@@\#\$\%\^\&\*\(\)\-\=\_\+]/gi,
+          expression: /[^A-Za-z0-9\!\@@\#\$\%\^\&\*\(\)\-\=\_\+]/gi, isFocus: true, isAlert: true
         },
-        {type: 'maxlength', length: 12, message: `{id} 필드 길이는 {length} 이하 입력하십시오.`},
-        {type: 'minlength', length: 8, message: `{id} 필드 길이는 {length} 이상 입력하십시오.`},
+        {type: 'maxlength', length: 12, message: `{id} 필드 길이는 {length} 이하 입력하십시오.`, isFocus: true, isAlert: true},
+        {type: 'minlength', length: 8, message: `{id} 필드 길이는 {length} 이상 입력하십시오.`, isFocus: true, isAlert: true},
       ]
     },
     {
       id: 'pass2', type: 'text',
       // value: ,
       rules: [
-        {type: 'required', message: `{id} 필드는 필수입력입니다.`},
+        {type: 'required', message: `{id} 필드는 필수입력입니다.`, isFocus: true, isAlert: true},
         {
           type: 'ntRegexp', message: `{id} 필드는 영문(대소문자포함),숫자,특수문자 외 값이 올수 없습니다.`,
-          expression: /[^A-Za-z0-9\!\@\#\$\%\^\&\*\(\)\-\=\_\+]/gi,
+          expression: /[^A-Za-z0-9\!\@\#\$\%\^\&\*\(\)\-\=\_\+]/gi, isFocus: true, isAlert: true
+
         },
-        {type: 'maxlength', length: 12, message: `{id} 필드 길이는 {length} 이하 입력하십시오.`},
-        {type: 'minlength', length: 8, message: `{id} 필드 길이는 {length} 이상 입력하십시오.`},
-        {type: 'equalsTo', targetId: 'pass1', message: `{id} 필드 값과 {targetId} 값이 일치하지 않습니다.`}
+        {type: 'maxlength', length: 12, message: `{id} 필드 길이는 {length} 이하 입력하십시오.`, isFocus: true, isAlert: true},
+        {type: 'minlength', length: 8, message: `{id} 필드 길이는 {length} 이상 입력하십시오.`, isFocus: true, isAlert: true},
+        {type: 'equalsTo', targetId: 'pass1', message: `{id} 필드 값과 {targetId} 값이 일치하지 않습니다.`, isFocus: true, isAlert: true}
       ]
     },
     {
       id: 'select1', type: 'select',
       // value: "2",
       rules: [
-        {type: 'required', message: `{id} 필드는 필수입력입니다.`},
+        {type: 'required', message: `{id} 필드는 필수입력입니다.`, isFocus: true, isAlert: true},
       ]
     },
     {
       id: 'fruit', type: 'radio',
       // value: 'apple'
       rules: [
-        {type: 'required', message: `{id} 필드는 필수입력입니다.`},
+        {type: 'required', message: `{id} 필드는 필수입력입니다.`, isFocus: true, isAlert: true},
       ]
     },
     {
       id: 'laptop', type: 'checkbox',
       // value: [HP, MAC]
       rules: [
-        {type: 'required', message: `{id} 필드는 필수입력입니다.`},
+        {type: 'required', message: `{id} 필드는 필수입력입니다.`, isFocus: true, isAlert: true},
       ]
     },
   ];
 
   // option 속성
-  // clientData.debug = true;
+  clientData.debug = true;
   clientData.callback = _.identity;
 
   function btnClick(event) {
